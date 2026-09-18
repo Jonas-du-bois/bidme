@@ -1,0 +1,50 @@
+# ═══════════════════════════════════════════════════════════════
+#  render.yaml — Render Blueprint (Infrastructure as Code)
+#  BID — Live Auction System
+# ═══════════════════════════════════════════════════════════════
+#
+#  Deployment:
+#    1. Push this repo to GitHub/GitLab
+#    2. Go to https://dashboard.render.com → New → Blueprint
+#    3. Connect the repo → Render detects this file automatically
+#    4. Fill in the environment variables when prompted
+#    5. Deploy
+#
+# ═══════════════════════════════════════════════════════════════
+
+services:
+  - type: web
+    name: bid
+    runtime: node
+    region: frankfurt  # eu-central — closest to FR users
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      # ── Node ──────────────────────────────────────────────
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+
+      # ── Next.js ───────────────────────────────────────────
+      - key: PORT
+        value: "3000"
+
+      # ── Appwrite ──────────────────────────────────────────
+      - key: NEXT_PUBLIC_APPWRITE_ENDPOINT
+        sync: false  # Must be set manually in Render dashboard
+      - key: NEXT_PUBLIC_APPWRITE_PROJECT_ID
+        sync: false
+      - key: NEXT_PUBLIC_APPWRITE_DATABASE_ID
+        value: bid_db
+      - key: NEXT_PUBLIC_APPWRITE_COLLECTION_ITEMS_ID
+        value: items
+      - key: NEXT_PUBLIC_APPWRITE_COLLECTION_BIDS_ID
+        value: bids
+
+      # ── Cloudinary ────────────────────────────────────────
+      - key: NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+        sync: false  # Must be set manually in Render dashboard
+      - key: NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+        value: bid_unsigned

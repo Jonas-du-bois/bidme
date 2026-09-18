@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
+/* ── Swiss Design – Global Tokens ─────────────────────────── */
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
+  --muted: #71717a;
+  --accent: #000000;
+  --border: #e4e4e7;
+  --destructive: #dc2626;
+  --success: #16a34a;
+  --bid-active: #0a0a0a;
+  --bid-ended: #a1a1aa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-bid-active: var(--bid-active);
+  --color-bid-ended: var(--bid-ended);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ── Base Styles ──────────────────────────────────────────── */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Swiss Design – Typography Scale ──────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* ── Minimal scrollbar ────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+/* ── Focus styles (accessibility) ─────────────────────────── */
+
+*:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+/* ── Timer pulse animation ────────────────────────────────── */
+
+@keyframes pulse-urgent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.timer-urgent {
+  animation: pulse-urgent 1s ease-in-out infinite;
 }

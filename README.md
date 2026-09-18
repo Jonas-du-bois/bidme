@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BID — Live Auction System
 
-## Getting Started
+Système d'enchères en temps réel. Participez sans créer de compte.
 
-First, run the development server:
+Built with **Next.js 16**, **Appwrite**, **Cloudinary**, **Tailwind CSS v4**.
+
+---
+
+## Stack
+
+| Technologie | Rôle |
+|-------------|------|
+| [Next.js 16](https://nextjs.org) | Framework React (App Router) |
+| [Appwrite](https://appwrite.io) | Base de données, Auth, Realtime (WebSockets) |
+| [Cloudinary](https://cloudinary.com) | Stockage et optimisation des images |
+| [Tailwind CSS v4](https://tailwindcss.com) | Styles utilitaires |
+| [Render](https://render.com) | Hébergement |
+
+## Fonctionnalités
+
+- ⏱️ **Timer réactif** — Countdown en temps réel par enchère
+- 🔌 **WebSockets** — Mise à jour instantanée des prix
+- 👤 **Sans compte** — Participation avec juste un nom
+- 🖼️ **Multi-images** — Carousel par article
+- 🔐 **Admin protégé** — Dashboard CRUD avec upload Cloudinary
+- 🎨 **Swiss Design** — Minimalisme, typographie Inter, espaces généreux
+
+## Démarrage rapide
 
 ```bash
+# 1. Cloner
+git clone <repo-url> bid && cd bid
+
+# 2. Installer les dépendances
+npm install
+
+# 3. Configurer l'environnement
+cp .env.example .env.local
+# → Remplir les valeurs dans .env.local
+
+# 4. Lancer le serveur de développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Configuration requise
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Appwrite
 
-## Learn More
+1. Créer un projet sur [cloud.appwrite.io](https://cloud.appwrite.io)
+2. Ajouter la plateforme Web : `localhost:3000`
+3. Créer la database `bid_db`
+4. Créer les collections `items` et `bids` (voir architecture Phase 1)
+5. Configurer les permissions (voir `.env.example`)
+6. Créer un compte admin dans Auth → Users
 
-To learn more about Next.js, take a look at the following resources:
+### Cloudinary
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Créer un compte sur [cloudinary.com](https://cloudinary.com)
+2. Settings → Upload → Add upload preset :
+   - Name: `bid_unsigned`
+   - Mode: Unsigned
+   - Folder: `bid/items`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Déploiement (Render)
 
-## Deploy on Vercel
+```bash
+# Utiliser le Blueprint
+# 1. Push le repo sur GitHub
+# 2. Render Dashboard → New → Blueprint → Connecter le repo
+# 3. render.yaml est détecté automatiquement
+# 4. Renseigner les variables d'environnement
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Structure du projet
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/
+│   ├── globals.css          # Tokens Swiss Design + Tailwind v4
+│   ├── layout.js            # Root Layout (Header, Footer, Fonts)
+│   ├── page.js              # Homepage (Hero + Grid d'enchères)
+│   └── admin/
+│       └── page.js          # Dashboard admin protégé
+├── components/
+│   └── AuctionCard.js       # Carte d'enchère (Timer + Realtime + Bid)
+└── lib/
+    ├── appwrite.js           # Client Appwrite (DB, Auth, Realtime)
+    └── cloudinary.js         # Helper upload Cloudinary
+```
+
+## Licence
+
+MIT
