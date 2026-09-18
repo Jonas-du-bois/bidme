@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import {
   account,
@@ -10,6 +10,18 @@ import {
 } from "@/lib/appwrite";
 import { ID, Query } from "appwrite";
 import { uploadImages } from "@/lib/cloudinary";
+
+function getActivationEndTime(duration) {
+  return new Date(Date.now() + duration * 1000).toISOString();
+}
+
+async function listAdminItems() {
+  return databases.listDocuments(
+    DATABASE_ID,
+    ITEMS_COLLECTION_ID,
+    [Query.orderDesc("created_at"), Query.limit(100)]
+  );
+}
 
 // ═══════════════════════════════════════════════════════════════
 //  ADMIN PAGE — Protected Route
@@ -143,14 +155,10 @@ function AdminDashboard({ user, onLogout }) {
   const [editingItem, setEditingItem] = useState(null);
 
   // ── Fetch All Items ────────────────────────────────────────
-  const fetchItems = useCallback(async () => {
-    setLoading(true);
+  const fetchItems = useCallback(async ({ showLoading = false } = {}) => {
+    if (showLoading) setLoading(true);
     try {
-      const response = await databases.listDocuments(
-        DATABASE_ID,
-        ITEMS_COLLECTION_ID,
-        [Query.orderDesc("created_at"), Query.limit(100)]
-      );
+      const response = await listAdminItems();
       setItems(response.documents);
     } catch (err) {
       console.error("Erreur chargement articles:", err);
@@ -160,8 +168,24 @@ function AdminDashboard({ user, onLogout }) {
   }, []);
 
   useEffect(() => {
-    fetchItems();
-  }, [fetchItems]);
+    let cancelled = false;
+
+    async function loadItems() {
+      try {
+        const response = await listAdminItems();
+        if (!cancelled) setItems(response.documents);
+      } catch (err) {
+        console.error("Erreur chargement articles:", err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    loadItems();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // ── Logout ─────────────────────────────────────────────────
   const handleLogout = async () => {
@@ -194,9 +218,7 @@ function AdminDashboard({ user, onLogout }) {
 
       // Recalculate end_time when activating
       if (isActivating) {
-        updates.end_time = new Date(
-          Date.now() + item.timer_duration * 1000
-        ).toISOString();
+        updates.end_time = getActivationEndTime(item.timer_duration);
       }
 
       await databases.updateDocument(
@@ -400,22 +422,24 @@ function ItemForm({ item, onSaved, onCancel }) {
   const [existingImages, setExistingImages] = useState(item?.images || []);
   const [newFiles, setNewFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const previewUrlsRef = useRef([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState("");
 
-  // ── Generate previews for new files ──────────────────────
+  // ── Release preview URLs when the form unmounts ──────────
   useEffect(() => {
-    if (newFiles.length === 0) {
-      setPreviews([]);
-      return;
-    }
+    return () =>
+      previewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+  }, []);
 
-    const urls = Array.from(newFiles).map((file) => URL.createObjectURL(file));
+  const handleNewFiles = (files) => {
+    previewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    const urls = files.map((file) => URL.createObjectURL(file));
+    previewUrlsRef.current = urls;
+    setNewFiles(files);
     setPreviews(urls);
-
-    return () => urls.forEach((url) => URL.revokeObjectURL(url));
-  }, [newFiles]);
+  };
 
   // ── Remove existing image ────────────────────────────────
   const removeExistingImage = (index) => {
@@ -652,7 +676,7 @@ function ItemForm({ item, onSaved, onCancel }) {
               type="file"
               accept="image/jpeg,image/png,image/webp,image/avif"
               multiple
-              onChange={(e) => setNewFiles(Array.from(e.target.files || []))}
+              onChange={(e) => handleNewFiles(Array.from(e.target.files || []))}
               className="hidden"
             />
             <span className="text-sm text-muted">

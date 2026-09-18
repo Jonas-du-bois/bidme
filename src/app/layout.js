@@ -1,4 +1,5 @@
 import { Inter, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 
 // ── Swiss Design Fonts ───────────────────────────────────────
@@ -34,22 +35,22 @@ export default function RootLayout({ children }) {
         {/* ── Header ──────────────────────────────────────── */}
         <header className="border-b border-border">
           <div className="max-w-7xl mx-auto px-6 py-6 flex items-baseline justify-between">
-            <a href="/" className="text-2xl font-bold tracking-tight">
+            <Link href="/" className="text-2xl font-bold tracking-tight">
               BID<span className="text-muted">.</span>
-            </a>
+            </Link>
             <nav className="flex gap-8 text-sm tracking-wide">
-              <a
+              <Link
                 href="/"
                 className="text-muted hover:text-foreground transition-colors"
               >
                 Enchères
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/admin"
                 className="text-muted hover:text-foreground transition-colors"
               >
                 Admin
-              </a>
+              </Link>
             </nav>
           </div>
         </header>
