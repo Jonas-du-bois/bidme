@@ -175,20 +175,25 @@ export default function AuctionCard({ item: initialItem }) {
           </div>
         )}
 
-        {/* Image navigation dots */}
+        {/* Image navigation dots — larger tap area on mobile */}
         {images.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
             {images.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentImageIndex(idx)}
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                  idx === currentImageIndex
-                    ? "bg-[#1258ca]"
-                    : "bg-[#1258ca]/30"
-                }`}
+                // 44px touch target via padding, dot is visual only
+                className="p-2 -m-2 flex items-center justify-center"
                 aria-label={`Image ${idx + 1}`}
-              />
+              >
+                <span
+                  className={`block w-2 h-2 rounded-full transition-colors ${
+                    idx === currentImageIndex
+                      ? "bg-[#1258ca]"
+                      : "bg-[#1258ca]/30"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         )}
@@ -218,19 +223,21 @@ export default function AuctionCard({ item: initialItem }) {
 
         {/* Title & Description */}
         <div>
-          <h2 className="text-lg font-bold leading-tight text-[#263654]">{item.name}</h2>
+          <h2 className="text-base sm:text-lg font-bold leading-tight text-[#263654]">
+            {item.name}
+          </h2>
           <p className="text-sm text-[#5a6a85] mt-1 line-clamp-2">
             {item.description}
           </p>
         </div>
 
         {/* Price */}
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold tabular-nums text-[#263654]">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className="text-xl sm:text-2xl font-bold tabular-nums text-[#263654]">
             {item.current_price.toFixed(2)} CHF
           </span>
           {item.current_bidder && (
-            <span className="text-xs text-[#5a6a85] truncate max-w-[120px]">
+            <span className="text-xs text-[#5a6a85] truncate max-w-[140px]">
               par {item.current_bidder}
             </span>
           )}
@@ -238,14 +245,16 @@ export default function AuctionCard({ item: initialItem }) {
 
         {/* ── Bid Form ───────────────────────────────────── */}
         {!isEnded && (
-          <form onSubmit={handleBid} className="space-y-2 pt-2">
+          <form onSubmit={handleBid} className="space-y-2 pt-1">
             <input
               type="text"
               value={bidderName}
               onChange={(e) => setBidderName(e.target.value)}
               placeholder="Votre nom"
-              className="w-full px-3 py-2 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
+              // py-3 for comfortable touch target
+              className="w-full px-3 py-3 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
               disabled={isSubmitting}
+              autoComplete="name"
             />
             <div className="flex gap-2">
               <input
@@ -255,13 +264,16 @@ export default function AuctionCard({ item: initialItem }) {
                 placeholder={`Min. ${(item.current_price + 1).toFixed(2)} CHF`}
                 step="0.01"
                 min={item.current_price + 0.01}
-                className="flex-1 px-3 py-2 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors font-mono rounded"
+                // min-w-0 prevents overflow; flex-1 takes available space
+                className="min-w-0 flex-1 px-3 py-3 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors font-mono rounded"
                 disabled={isSubmitting}
+                inputMode="decimal"
               />
+              {/* shrink-0 prevents button from being squeezed */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-4 py-2 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                className="shrink-0 px-4 py-3 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] active:bg-[#0a3a8a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded"
               >
                 {isSubmitting ? "..." : "Enchérir"}
               </button>
@@ -284,7 +296,7 @@ export default function AuctionCard({ item: initialItem }) {
         {/* Message feedback */}
         {message && (
           <p
-            className={`text-xs ${
+            className={`text-xs font-medium ${
               message.type === "error" ? "text-[#c70a1a]" : "text-[#88c559]"
             }`}
           >

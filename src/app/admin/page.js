@@ -91,12 +91,12 @@ function LoginForm({ onLogin }) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-24">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-24">
       <div className="max-w-sm">
-        <h1 className="text-3xl font-bold tracking-tight mb-2 text-[#263654]">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 text-[#263654]">
           Administration
         </h1>
-        <p className="text-[#5a6a85] text-sm mb-8">
+        <p className="text-[#5a6a85] text-sm mb-6 sm:mb-8">
           Connectez-vous pour gérer les enchères.
         </p>
 
@@ -110,8 +110,10 @@ function LoginForm({ onLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
+              className="w-full px-3 py-3 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
               placeholder="admin@example.com"
+              autoComplete="email"
+              inputMode="email"
             />
           </div>
 
@@ -124,8 +126,9 @@ function LoginForm({ onLogin }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
+              className="w-full px-3 py-3 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
               placeholder="••••••••"
+              autoComplete="current-password"
             />
           </div>
 
@@ -134,7 +137,7 @@ function LoginForm({ onLogin }) {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-2.5 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors disabled:opacity-50 rounded"
+            className="w-full py-3 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] active:bg-[#0a3a8a] transition-colors disabled:opacity-50 rounded"
           >
             {submitting ? "Connexion..." : "Se connecter"}
           </button>
@@ -248,24 +251,24 @@ function AdminDashboard({ user, onLogout }) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
       {/* ── Header ──────────────────────────────────────────── */}
-      <div className="flex items-baseline justify-between mb-12">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#263654]">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8 sm:mb-12">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#263654]">
             Administration
           </h1>
-          <p className="text-sm text-[#5a6a85] mt-1">
+          <p className="text-sm text-[#5a6a85] mt-1 truncate">
             Connecté : {user.email}
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
           <button
             onClick={() => {
               setEditingItem(null);
               setShowForm(!showForm);
             }}
-            className="px-4 py-2 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors rounded"
+            className="px-4 py-2.5 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors rounded"
           >
             {showForm ? "Annuler" : "+ Nouvel article"}
           </button>
@@ -319,79 +322,86 @@ function AdminDashboard({ user, onLogout }) {
         ) : (
           <div className="divide-y divide-[#dce3ee]">
             {items.map((item) => (
-              <div key={item.$id} className="flex items-center gap-4 py-4">
-                {/* Thumbnail */}
-                <div className="w-20 h-16 bg-[#f4f6fb] relative shrink-0 overflow-hidden rounded">
-                  {item.images && item.images.length > 0 ? (
-                    <Image
-                      src={item.images[0]}
-                      alt={item.name}
-                      fill
-                      className="object-cover"
-                      sizes="80px"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#5a6a85]">
-                      N/A
+              <div key={item.$id} className="py-4 space-y-3 sm:space-y-0">
+
+                {/* ── Mobile & Desktop: top row ─────────────── */}
+                <div className="flex items-center gap-3">
+                  {/* Thumbnail */}
+                  <div className="w-16 h-12 sm:w-20 sm:h-16 bg-[#f4f6fb] relative shrink-0 overflow-hidden rounded">
+                    {item.images && item.images.length > 0 ? (
+                      <Image
+                        src={item.images[0]}
+                        alt={item.name}
+                        fill
+                        className="object-cover"
+                        sizes="80px"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#5a6a85]">
+                        N/A
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info + status badge inline */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="text-sm font-medium text-[#263654] truncate">
+                        {item.name}
+                      </h3>
+                      {/* Status badge — always visible next to name */}
+                      <span
+                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded shrink-0 ${
+                          item.status === "active"
+                            ? "bg-[#1258ca] text-white"
+                            : "bg-[#dce3ee] text-[#5a6a85]"
+                        }`}
+                      >
+                        {item.status}
+                      </span>
                     </div>
-                  )}
+                    <p className="text-xs text-[#5a6a85] mt-0.5">
+                      {item.current_price.toFixed(2)} CHF
+                      {item.current_bidder && ` — ${item.current_bidder}`}
+                    </p>
+                    {/* Timer — shown below price on mobile */}
+                    <p className="text-[10px] text-[#5a6a85] font-mono mt-0.5 sm:hidden">
+                      Durée : {item.timer_duration}s
+                    </p>
+                  </div>
+
+                  {/* Timer — desktop only, in original position */}
+                  <span className="text-xs text-[#5a6a85] font-mono w-16 text-right shrink-0 hidden sm:block">
+                    {item.timer_duration}s
+                  </span>
                 </div>
 
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium truncate text-[#263654]">
-                    {item.name}
-                  </h3>
-                  <p className="text-xs text-[#5a6a85] mt-0.5">
-                    {item.current_price.toFixed(2)} CHF
-                    {item.current_bidder &&
-                      ` — ${item.current_bidder}`}
-                  </p>
-                </div>
-
-                {/* Status */}
-                <span
-                  className={`text-xs font-mono px-2 py-1 rounded ${
-                    item.status === "active"
-                      ? "bg-[#1258ca] text-white"
-                      : item.status === "draft"
-                      ? "bg-[#dce3ee] text-[#5a6a85]"
-                      : "bg-[#dce3ee] text-[#5a6a85]"
-                  }`}
-                >
-                  {item.status}
-                </span>
-
-                {/* Timer info */}
-                <span className="text-xs text-[#5a6a85] font-mono w-16 text-right">
-                  {item.timer_duration}s
-                </span>
-
-                {/* Actions */}
-                <div className="flex items-center gap-2 shrink-0">
+                {/* ── Actions row — full width on mobile ──────── */}
+                <div className="flex items-center gap-2 flex-wrap pl-[76px] sm:pl-0 sm:justify-end">
                   <button
                     onClick={() => handleToggleStatus(item)}
-                    className={`text-xs px-3 py-1 border transition-colors rounded ${
+                    className={`text-xs px-3 py-1.5 border transition-colors rounded ${
                       item.status === "active"
-                        ? "border-[#c70a1a] text-[#c70a1a] hover:bg-[#c70a1a] hover:text-white"
-                        : "border-[#1258ca] text-[#1258ca] hover:bg-[#1258ca] hover:text-white"
+                        ? "border-[#c70a1a] text-[#c70a1a] hover:bg-[#c70a1a] hover:text-white active:bg-[#c70a1a] active:text-white"
+                        : "border-[#1258ca] text-[#1258ca] hover:bg-[#1258ca] hover:text-white active:bg-[#1258ca] active:text-white"
                     }`}
                   >
                     {item.status === "active" ? "Terminer" : "Activer"}
                   </button>
                   <button
                     onClick={() => handleEdit(item)}
-                    className="text-xs px-3 py-1 border border-[#dce3ee] text-[#5a6a85] hover:text-[#263654] hover:border-[#263654] transition-colors rounded"
+                    className="text-xs px-3 py-1.5 border border-[#dce3ee] text-[#5a6a85] hover:text-[#263654] hover:border-[#263654] transition-colors rounded"
                   >
                     Éditer
                   </button>
                   <button
                     onClick={() => handleDelete(item.$id)}
-                    className="text-xs px-3 py-1 border border-[#dce3ee] text-[#5a6a85] hover:text-[#c70a1a] hover:border-[#c70a1a] transition-colors rounded"
+                    className="text-xs px-3 py-1.5 border border-[#dce3ee] text-[#5a6a85] hover:text-[#c70a1a] hover:border-[#c70a1a] transition-colors rounded"
                   >
-                    ×
+                    Supprimer
                   </button>
                 </div>
+
               </div>
             ))}
           </div>
