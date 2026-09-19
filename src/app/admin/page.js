@@ -490,7 +490,15 @@ function ItemForm({ item, onSaved, onCancel }) {
         throw new Error("Au moins une image est requise");
       }
 
-      setUploadProgress("Enregistrement...");
+      // Calcul du end_time :
+      // - Nouveau article : maintenant + durée
+      // - Édition, durée MODIFIÉE : recalculé depuis maintenant (draft ou active)
+      // - Édition, durée inchangée : end_time conservé tel quel
+      const timerChanged = isEditing && timerDuration !== item.timer_duration;
+      const newEndTime =
+        !isEditing || timerChanged
+          ? new Date(Date.now() + timerDuration * 1000).toISOString()
+          : item.end_time;
 
       const data = {
         name: name.trim(),
@@ -504,9 +512,7 @@ function ItemForm({ item, onSaved, onCancel }) {
         created_at: isEditing
           ? item.created_at
           : new Date().toISOString(),
-        end_time: isEditing
-          ? item.end_time
-          : new Date(Date.now() + timerDuration * 1000).toISOString(),
+        end_time: newEndTime,
       };
 
       if (isEditing) {
