@@ -50,8 +50,8 @@ export default function AdminPage() {
     return (
       <div className="max-w-7xl mx-auto px-6 py-24">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-zinc-100 w-48" />
-          <div className="h-4 bg-zinc-100 w-64" />
+          <div className="h-8 bg-[#dce3ee] w-48" />
+          <div className="h-4 bg-[#dce3ee] w-64" />
         </div>
       </div>
     );
@@ -93,16 +93,16 @@ function LoginForm({ onLogin }) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-24">
       <div className="max-w-sm">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">
+        <h1 className="text-3xl font-bold tracking-tight mb-2 text-[#263654]">
           Administration
         </h1>
-        <p className="text-muted text-sm mb-8">
+        <p className="text-[#5a6a85] text-sm mb-8">
           Connectez-vous pour gérer les enchères.
         </p>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs text-muted uppercase tracking-widest mb-1.5">
+            <label className="block text-xs text-[#5a6a85] uppercase tracking-widest mb-1.5">
               Email
             </label>
             <input
@@ -110,13 +110,13 @@ function LoginForm({ onLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2.5 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors"
+              className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
               placeholder="admin@example.com"
             />
           </div>
 
           <div>
-            <label className="block text-xs text-muted uppercase tracking-widest mb-1.5">
+            <label className="block text-xs text-[#5a6a85] uppercase tracking-widest mb-1.5">
               Mot de passe
             </label>
             <input
@@ -124,17 +124,17 @@ function LoginForm({ onLogin }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2.5 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors"
+              className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
               placeholder="••••••••"
             />
           </div>
 
-          {error && <p className="text-xs text-destructive">{error}</p>}
+          {error && <p className="text-xs text-[#c70a1a]">{error}</p>}
 
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-2.5 bg-foreground text-background text-sm font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50"
+            className="w-full py-2.5 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors disabled:opacity-50 rounded"
           >
             {submitting ? "Connexion..." : "Se connecter"}
           </button>
@@ -252,10 +252,10 @@ function AdminDashboard({ user, onLogout }) {
       {/* ── Header ──────────────────────────────────────────── */}
       <div className="flex items-baseline justify-between mb-12">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight text-[#263654]">
             Administration
           </h1>
-          <p className="text-sm text-muted mt-1">
+          <p className="text-sm text-[#5a6a85] mt-1">
             Connecté : {user.email}
           </p>
         </div>
@@ -265,13 +265,13 @@ function AdminDashboard({ user, onLogout }) {
               setEditingItem(null);
               setShowForm(!showForm);
             }}
-            className="px-4 py-2 bg-foreground text-background text-sm font-medium hover:bg-foreground/90 transition-colors"
+            className="px-4 py-2 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors rounded"
           >
             {showForm ? "Annuler" : "+ Nouvel article"}
           </button>
           <button
             onClick={handleLogout}
-            className="text-sm text-muted hover:text-foreground transition-colors"
+            className="text-sm text-[#5a6a85] hover:text-[#263654] transition-colors"
           >
             Déconnexion
           </button>
@@ -292,9 +292,9 @@ function AdminDashboard({ user, onLogout }) {
 
       {/* ── Items Table ─────────────────────────────────────── */}
       <section>
-        <div className="flex items-center gap-4 border-b border-border pb-4 mb-6">
-          <h2 className="text-lg font-bold">Articles</h2>
-          <span className="text-xs text-muted font-mono">
+        <div className="flex items-center gap-4 border-b border-[#dce3ee] pb-4 mb-6">
+          <h2 className="text-lg font-bold text-[#263654]">Articles</h2>
+          <span className="text-xs text-[#5a6a85] font-mono">
             {items.length} total
           </span>
         </div>
@@ -303,25 +303,25 @@ function AdminDashboard({ user, onLogout }) {
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
               <div key={i} className="animate-pulse flex gap-4 py-4">
-                <div className="w-20 h-16 bg-zinc-100 shrink-0" />
+                <div className="w-20 h-16 bg-[#dce3ee] shrink-0" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-zinc-100 w-1/3" />
-                  <div className="h-3 bg-zinc-100 w-1/2" />
+                  <div className="h-4 bg-[#dce3ee] w-1/3" />
+                  <div className="h-3 bg-[#dce3ee] w-1/2" />
                 </div>
               </div>
             ))}
           </div>
         ) : items.length === 0 ? (
-          <p className="text-sm text-muted py-8">
+          <p className="text-sm text-[#5a6a85] py-8">
             Aucun article. Cliquez sur &quot;+ Nouvel article&quot; pour
             commencer.
           </p>
         ) : (
-          <div className="divide-y divide-border">
+          <div className="divide-y divide-[#dce3ee]">
             {items.map((item) => (
               <div key={item.$id} className="flex items-center gap-4 py-4">
                 {/* Thumbnail */}
-                <div className="w-20 h-16 bg-zinc-100 relative shrink-0 overflow-hidden">
+                <div className="w-20 h-16 bg-[#f4f6fb] relative shrink-0 overflow-hidden rounded">
                   {item.images && item.images.length > 0 ? (
                     <Image
                       src={item.images[0]}
@@ -331,7 +331,7 @@ function AdminDashboard({ user, onLogout }) {
                       sizes="80px"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-[10px] text-muted">
+                    <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#5a6a85]">
                       N/A
                     </div>
                   )}
@@ -339,11 +339,11 @@ function AdminDashboard({ user, onLogout }) {
 
                 {/* Info */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium truncate">
+                  <h3 className="text-sm font-medium truncate text-[#263654]">
                     {item.name}
                   </h3>
-                  <p className="text-xs text-muted mt-0.5">
-                    {item.current_price.toFixed(2)} €
+                  <p className="text-xs text-[#5a6a85] mt-0.5">
+                    {item.current_price.toFixed(2)} CHF
                     {item.current_bidder &&
                       ` — ${item.current_bidder}`}
                   </p>
@@ -351,19 +351,19 @@ function AdminDashboard({ user, onLogout }) {
 
                 {/* Status */}
                 <span
-                  className={`text-xs font-mono px-2 py-1 ${
+                  className={`text-xs font-mono px-2 py-1 rounded ${
                     item.status === "active"
-                      ? "bg-foreground text-background"
+                      ? "bg-[#1258ca] text-white"
                       : item.status === "draft"
-                      ? "bg-zinc-100 text-muted"
-                      : "bg-zinc-100 text-muted"
+                      ? "bg-[#dce3ee] text-[#5a6a85]"
+                      : "bg-[#dce3ee] text-[#5a6a85]"
                   }`}
                 >
                   {item.status}
                 </span>
 
                 {/* Timer info */}
-                <span className="text-xs text-muted font-mono w-16 text-right">
+                <span className="text-xs text-[#5a6a85] font-mono w-16 text-right">
                   {item.timer_duration}s
                 </span>
 
@@ -371,23 +371,23 @@ function AdminDashboard({ user, onLogout }) {
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={() => handleToggleStatus(item)}
-                    className={`text-xs px-3 py-1 border transition-colors ${
+                    className={`text-xs px-3 py-1 border transition-colors rounded ${
                       item.status === "active"
-                        ? "border-destructive text-destructive hover:bg-destructive hover:text-background"
-                        : "border-foreground text-foreground hover:bg-foreground hover:text-background"
+                        ? "border-[#c70a1a] text-[#c70a1a] hover:bg-[#c70a1a] hover:text-white"
+                        : "border-[#1258ca] text-[#1258ca] hover:bg-[#1258ca] hover:text-white"
                     }`}
                   >
                     {item.status === "active" ? "Terminer" : "Activer"}
                   </button>
                   <button
                     onClick={() => handleEdit(item)}
-                    className="text-xs px-3 py-1 border border-border text-muted hover:text-foreground hover:border-foreground transition-colors"
+                    className="text-xs px-3 py-1 border border-[#dce3ee] text-[#5a6a85] hover:text-[#263654] hover:border-[#263654] transition-colors rounded"
                   >
                     Éditer
                   </button>
                   <button
                     onClick={() => handleDelete(item.$id)}
-                    className="text-xs px-3 py-1 border border-border text-muted hover:text-destructive hover:border-destructive transition-colors"
+                    className="text-xs px-3 py-1 border border-[#dce3ee] text-[#5a6a85] hover:text-[#c70a1a] hover:border-[#c70a1a] transition-colors rounded"
                   >
                     ×
                   </button>
@@ -525,15 +525,15 @@ function ItemForm({ item, onSaved, onCancel }) {
   };
 
   return (
-    <section className="border-b border-border pb-10 mb-10">
-      <h2 className="text-lg font-bold mb-6">
+    <section className="border-b border-[#dce3ee] pb-10 mb-10">
+      <h2 className="text-lg font-bold mb-6 text-[#263654]">
         {isEditing ? `Modifier : ${item.name}` : "Nouvel article"}
       </h2>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5 max-w-4xl">
         {/* ── Name ──────────────────────────────────────── */}
         <div className="md:col-span-2">
-          <label className="block text-xs text-muted uppercase tracking-widest mb-1.5">
+          <label className="block text-xs text-[#5a6a85] uppercase tracking-widest mb-1.5">
             Nom de l&apos;article
           </label>
           <input
@@ -541,14 +541,14 @@ function ItemForm({ item, onSaved, onCancel }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-3 py-2.5 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors"
+            className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
             placeholder="Ex: Carte Pokémon Dracaufeu 1ère Édition"
           />
         </div>
 
         {/* ── Description ───────────────────────────────── */}
         <div className="md:col-span-2">
-          <label className="block text-xs text-muted uppercase tracking-widest mb-1.5">
+          <label className="block text-xs text-[#5a6a85] uppercase tracking-widest mb-1.5">
             Description
           </label>
           <textarea
@@ -556,15 +556,15 @@ function ItemForm({ item, onSaved, onCancel }) {
             onChange={(e) => setDescription(e.target.value)}
             required
             rows={4}
-            className="w-full px-3 py-2.5 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors resize-none"
+            className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors resize-none rounded"
             placeholder="Description détaillée de l'article, état, provenance..."
           />
         </div>
 
         {/* ── Starting Price ────────────────────────────── */}
         <div>
-          <label className="block text-xs text-muted uppercase tracking-widest mb-1.5">
-            Prix de départ (€)
+          <label className="block text-xs text-[#5a6a85] uppercase tracking-widest mb-1.5">
+            Prix de départ (CHF)
           </label>
           <input
             type="number"
@@ -573,14 +573,14 @@ function ItemForm({ item, onSaved, onCancel }) {
             required
             min="0"
             step="0.01"
-            className="w-full px-3 py-2.5 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors font-mono"
+            className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors font-mono rounded"
             placeholder="0.00"
           />
         </div>
 
         {/* ── Timer ─────────────────────────────────────── */}
         <div>
-          <label className="block text-xs text-muted uppercase tracking-widest mb-1.5">
+          <label className="block text-xs text-[#5a6a85] uppercase tracking-widest mb-1.5">
             Durée du timer
           </label>
           <div className="flex gap-2">
@@ -590,10 +590,10 @@ function ItemForm({ item, onSaved, onCancel }) {
                 value={timerMinutes}
                 onChange={(e) => setTimerMinutes(e.target.value)}
                 min="0"
-                className="w-full px-3 py-2.5 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors font-mono"
+                className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors font-mono rounded"
                 placeholder="5"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#5a6a85]">
                 min
               </span>
             </div>
@@ -604,10 +604,10 @@ function ItemForm({ item, onSaved, onCancel }) {
                 onChange={(e) => setTimerSeconds(e.target.value)}
                 min="0"
                 max="59"
-                className="w-full px-3 py-2.5 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors font-mono"
+                className="w-full px-3 py-2.5 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors font-mono rounded"
                 placeholder="0"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#5a6a85]">
                 sec
               </span>
             </div>
@@ -616,7 +616,7 @@ function ItemForm({ item, onSaved, onCancel }) {
 
         {/* ── Images ────────────────────────────────────── */}
         <div className="md:col-span-2">
-          <label className="block text-xs text-muted uppercase tracking-widest mb-1.5">
+          <label className="block text-xs text-[#5a6a85] uppercase tracking-widest mb-1.5">
             Images
           </label>
 
@@ -626,7 +626,7 @@ function ItemForm({ item, onSaved, onCancel }) {
               {existingImages.map((url, idx) => (
                 <div
                   key={idx}
-                  className="relative w-20 h-20 bg-zinc-100 group"
+                  className="relative w-20 h-20 bg-[#f4f6fb] group rounded overflow-hidden"
                 >
                   <Image
                     src={url}
@@ -638,7 +638,7 @@ function ItemForm({ item, onSaved, onCancel }) {
                   <button
                     type="button"
                     onClick={() => removeExistingImage(idx)}
-                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-destructive text-background text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#c70a1a] text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full"
                   >
                     ×
                   </button>
@@ -653,7 +653,7 @@ function ItemForm({ item, onSaved, onCancel }) {
               {previews.map((url, idx) => (
                 <div
                   key={idx}
-                  className="relative w-20 h-20 bg-zinc-100 border border-dashed border-foreground/20"
+                  className="relative w-20 h-20 bg-[#f4f6fb] border border-dashed border-[#1258ca]/30 rounded overflow-hidden"
                 >
                   <Image
                     src={url}
@@ -662,7 +662,7 @@ function ItemForm({ item, onSaved, onCancel }) {
                     className="object-cover opacity-70"
                     sizes="80px"
                   />
-                  <span className="absolute bottom-0.5 right-0.5 text-[9px] text-muted bg-background/80 px-1">
+                  <span className="absolute bottom-0.5 right-0.5 text-[9px] text-[#5a6a85] bg-white/80 px-1">
                     new
                   </span>
                 </div>
@@ -671,7 +671,7 @@ function ItemForm({ item, onSaved, onCancel }) {
           )}
 
           {/* File input */}
-          <label className="block border border-dashed border-border hover:border-foreground transition-colors cursor-pointer p-4 text-center">
+          <label className="block border border-dashed border-[#dce3ee] hover:border-[#1258ca] transition-colors cursor-pointer p-4 text-center rounded">
             <input
               type="file"
               accept="image/jpeg,image/png,image/webp,image/avif"
@@ -679,11 +679,11 @@ function ItemForm({ item, onSaved, onCancel }) {
               onChange={(e) => handleNewFiles(Array.from(e.target.files || []))}
               className="hidden"
             />
-            <span className="text-sm text-muted">
+            <span className="text-sm text-[#5a6a85]">
               Cliquez pour ajouter des images
             </span>
             <br />
-            <span className="text-xs text-muted/50">
+            <span className="text-xs text-[#5a6a85]/50">
               JPG, PNG, WebP, AVIF — 10 Mo max par image
             </span>
           </label>
@@ -692,14 +692,14 @@ function ItemForm({ item, onSaved, onCancel }) {
         {/* ── Error ─────────────────────────────────────── */}
         {error && (
           <div className="md:col-span-2">
-            <p className="text-xs text-destructive">{error}</p>
+            <p className="text-xs text-[#c70a1a]">{error}</p>
           </div>
         )}
 
         {/* ── Upload progress ───────────────────────────── */}
         {uploadProgress && (
           <div className="md:col-span-2">
-            <p className="text-xs text-muted font-mono">{uploadProgress}</p>
+            <p className="text-xs text-[#5a6a85] font-mono">{uploadProgress}</p>
           </div>
         )}
 
@@ -708,7 +708,7 @@ function ItemForm({ item, onSaved, onCancel }) {
           <button
             type="submit"
             disabled={submitting}
-            className="px-6 py-2.5 bg-foreground text-background text-sm font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50"
+            className="px-6 py-2.5 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors disabled:opacity-50 rounded"
           >
             {submitting
               ? "Enregistrement..."
@@ -719,7 +719,7 @@ function ItemForm({ item, onSaved, onCancel }) {
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-2.5 text-sm text-muted hover:text-foreground transition-colors"
+            className="px-6 py-2.5 text-sm text-[#5a6a85] hover:text-[#263654] transition-colors"
           >
             Annuler
           </button>

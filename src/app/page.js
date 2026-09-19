@@ -44,19 +44,19 @@ export default function HomePage() {
     <div className="max-w-7xl mx-auto px-6">
       {/* ── Hero Section ──────────────────────────────────── */}
       <section className="py-16 md:py-24">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] max-w-3xl">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] max-w-3xl text-[#263654]">
           Enchères en
           <br />
-          temps réel<span className="text-muted">.</span>
+          temps réel<span className="text-[#c70a1a]">.</span>
         </h1>
-        <p className="mt-4 text-muted text-lg max-w-md">
+        <p className="mt-4 text-[#5a6a85] text-lg max-w-md">
           Participez sans créer de compte. Entrez votre nom et enchérissez.
         </p>
       </section>
 
       {/* ── Filters ───────────────────────────────────────── */}
-      <section className="border-b border-border pb-4 mb-8 flex items-center gap-6">
-        <span className="text-xs text-muted uppercase tracking-widest">
+      <section className="border-b border-[#dce3ee] pb-4 mb-8 flex items-center gap-6">
+        <span className="text-xs text-[#5a6a85] uppercase tracking-widest">
           Filtre
         </span>
         {[
@@ -67,10 +67,10 @@ export default function HomePage() {
           <button
             key={key}
             onClick={() => setFilter(key)}
-            className={`text-sm transition-colors ${
+            className={`text-sm transition-colors pb-0.5 ${
               filter === key
-                ? "text-foreground font-medium"
-                : "text-muted hover:text-foreground"
+                ? "text-[#1258ca] font-semibold border-b-2 border-[#1258ca]"
+                : "text-[#5a6a85] hover:text-[#263654]"
             }`}
           >
             {label}
@@ -78,7 +78,7 @@ export default function HomePage() {
         ))}
 
         {/* Item count */}
-        <span className="ml-auto text-xs text-muted font-mono">
+        <span className="ml-auto text-xs text-[#5a6a85] font-mono">
           {items.length} article{items.length !== 1 ? "s" : ""}
         </span>
       </section>
@@ -89,25 +89,25 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="animate-pulse space-y-4">
-                <div className="aspect-[4/3] bg-zinc-100" />
-                <div className="h-3 bg-zinc-100 w-1/3" />
-                <div className="h-5 bg-zinc-100 w-2/3" />
-                <div className="h-4 bg-zinc-100 w-1/2" />
+                <div className="aspect-[4/3] bg-[#dce3ee]" />
+                <div className="h-3 bg-[#dce3ee] w-1/3" />
+                <div className="h-5 bg-[#dce3ee] w-2/3" />
+                <div className="h-4 bg-[#dce3ee] w-1/2" />
               </div>
             ))}
           </div>
         </section>
       ) : items.length === 0 ? (
         <section className="py-24 text-center">
-          <p className="text-muted text-sm">Aucune enchère disponible.</p>
-          <p className="text-muted/50 text-xs mt-2">
+          <p className="text-[#5a6a85] text-sm">Aucune enchère disponible.</p>
+          <p className="text-[#5a6a85]/50 text-xs mt-2">
             Revenez bientôt ou consultez la page Admin pour ajouter des
             articles.
           </p>
         </section>
       ) : (
         <section className="pb-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
             {items.map((item) => (
               <AuctionCard key={item.$id} item={item} />
             ))}

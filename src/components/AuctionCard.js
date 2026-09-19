@@ -97,7 +97,7 @@ export default function AuctionCard({ item: initialItem }) {
       if (isNaN(amount) || amount <= item.current_price) {
         setMessage({
           type: "error",
-          text: `L'enchère doit dépasser ${item.current_price.toFixed(2)} €`,
+          text: `L'enchère doit dépasser ${item.current_price.toFixed(2)} CHF`,
         });
         return;
       }
@@ -158,9 +158,9 @@ export default function AuctionCard({ item: initialItem }) {
       : ["/placeholder.svg"];
 
   return (
-    <article className="group">
+    <article className="group bg-white rounded-lg overflow-hidden shadow-sm border border-[#dce3ee] hover:shadow-md transition-shadow">
       {/* ── Image Section ──────────────────────────────────── */}
-      <div className="relative aspect-[4/3] bg-zinc-100 overflow-hidden mb-4">
+      <div className="relative aspect-[4/3] bg-[#f4f6fb] overflow-hidden">
         {images[0] !== "/placeholder.svg" ? (
           <Image
             src={images[currentImageIndex]}
@@ -170,7 +170,7 @@ export default function AuctionCard({ item: initialItem }) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-muted text-sm">
+          <div className="absolute inset-0 flex items-center justify-center text-[#5a6a85] text-sm">
             Pas d&apos;image
           </div>
         )}
@@ -184,8 +184,8 @@ export default function AuctionCard({ item: initialItem }) {
                 onClick={() => setCurrentImageIndex(idx)}
                 className={`w-1.5 h-1.5 rounded-full transition-colors ${
                   idx === currentImageIndex
-                    ? "bg-foreground"
-                    : "bg-foreground/30"
+                    ? "bg-[#1258ca]"
+                    : "bg-[#1258ca]/30"
                 }`}
                 aria-label={`Image ${idx + 1}`}
               />
@@ -195,22 +195,22 @@ export default function AuctionCard({ item: initialItem }) {
 
         {/* Status badge */}
         {isEnded && (
-          <div className="absolute top-3 left-3 bg-foreground text-background px-3 py-1 text-xs font-medium tracking-wide uppercase">
+          <div className="absolute top-3 left-3 bg-[#c70a1a] text-white px-3 py-1 text-xs font-medium tracking-wide uppercase rounded">
             Terminé
           </div>
         )}
       </div>
 
       {/* ── Info Section ───────────────────────────────────── */}
-      <div className="space-y-3">
+      <div className="space-y-3 p-4">
         {/* Timer */}
         <div
           className={`font-mono text-sm tracking-wider ${
             isEnded
-              ? "text-bid-ended"
+              ? "text-[#5a6a85]"
               : isUrgent
-              ? "text-destructive timer-urgent"
-              : "text-foreground"
+              ? "text-[#c70a1a] timer-urgent"
+              : "text-[#1258ca]"
           }`}
         >
           {isEnded ? "00:00" : formatTime(timeLeft)}
@@ -218,19 +218,19 @@ export default function AuctionCard({ item: initialItem }) {
 
         {/* Title & Description */}
         <div>
-          <h2 className="text-lg font-bold leading-tight">{item.name}</h2>
-          <p className="text-sm text-muted mt-1 line-clamp-2">
+          <h2 className="text-lg font-bold leading-tight text-[#263654]">{item.name}</h2>
+          <p className="text-sm text-[#5a6a85] mt-1 line-clamp-2">
             {item.description}
           </p>
         </div>
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold tabular-nums">
-            {item.current_price.toFixed(2)} €
+          <span className="text-2xl font-bold tabular-nums text-[#263654]">
+            {item.current_price.toFixed(2)} CHF
           </span>
           {item.current_bidder && (
-            <span className="text-xs text-muted truncate max-w-[120px]">
+            <span className="text-xs text-[#5a6a85] truncate max-w-[120px]">
               par {item.current_bidder}
             </span>
           )}
@@ -244,7 +244,7 @@ export default function AuctionCard({ item: initialItem }) {
               value={bidderName}
               onChange={(e) => setBidderName(e.target.value)}
               placeholder="Votre nom"
-              className="w-full px-3 py-2 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors"
+              className="w-full px-3 py-2 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors rounded"
               disabled={isSubmitting}
             />
             <div className="flex gap-2">
@@ -252,16 +252,16 @@ export default function AuctionCard({ item: initialItem }) {
                 type="number"
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
-                placeholder={`Min. ${(item.current_price + 1).toFixed(2)} €`}
+                placeholder={`Min. ${(item.current_price + 1).toFixed(2)} CHF`}
                 step="0.01"
                 min={item.current_price + 0.01}
-                className="flex-1 px-3 py-2 text-sm bg-transparent border border-border placeholder:text-muted/50 focus:border-foreground focus:outline-none transition-colors font-mono"
+                className="flex-1 px-3 py-2 text-sm bg-white border border-[#dce3ee] placeholder:text-[#5a6a85]/50 focus:border-[#1258ca] focus:outline-none transition-colors font-mono rounded"
                 disabled={isSubmitting}
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-4 py-2 bg-foreground text-background text-sm font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[#1258ca] text-white text-sm font-medium hover:bg-[#0e4aad] transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded"
               >
                 {isSubmitting ? "..." : "Enchérir"}
               </button>
@@ -271,10 +271,10 @@ export default function AuctionCard({ item: initialItem }) {
 
         {/* Ended state */}
         {isEnded && item.current_bidder && (
-          <div className="pt-2 border-t border-border">
-            <p className="text-xs text-muted">
+          <div className="pt-2 border-t border-[#dce3ee]">
+            <p className="text-xs text-[#5a6a85]">
               Remporté par{" "}
-              <span className="text-foreground font-medium">
+              <span className="text-[#1258ca] font-medium">
                 {item.current_bidder}
               </span>
             </p>
@@ -285,7 +285,7 @@ export default function AuctionCard({ item: initialItem }) {
         {message && (
           <p
             className={`text-xs ${
-              message.type === "error" ? "text-destructive" : "text-success"
+              message.type === "error" ? "text-[#c70a1a]" : "text-[#88c559]"
             }`}
           >
             {message.text}

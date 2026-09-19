@@ -1,17 +1,26 @@
 @import "tailwindcss";
 
-/* ── Swiss Design – Global Tokens ─────────────────────────── */
+/* ── Welsh Master Team – Global Tokens ─────────────────────── */
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --muted: #71717a;
-  --accent: #000000;
-  --border: #e4e4e7;
-  --destructive: #dc2626;
-  --success: #16a34a;
-  --bid-active: #0a0a0a;
-  --bid-ended: #a1a1aa;
+  /* WMTeam brand palette */
+  --wm-navy:   #263654;   /* primary dark — header, headings */
+  --wm-blue:   #1258ca;   /* primary blue — buttons, links, active */
+  --wm-red:    #c70a1a;   /* accent red — urgency, badges, highlights */
+  --wm-white:  #ffffff;
+  --wm-bg:     #f4f6fb;   /* light blue-grey page background */
+  --wm-border: #dce3ee;
+  --wm-muted:  #5a6a85;
+
+  --background:  var(--wm-bg);
+  --foreground:  var(--wm-navy);
+  --muted:       var(--wm-muted);
+  --accent:      var(--wm-blue);
+  --border:      var(--wm-border);
+  --destructive: var(--wm-red);
+  --success:     #88c559;
+  --bid-active:  var(--wm-blue);
+  --bid-ended:   var(--wm-muted);
 }
 
 @theme inline {
@@ -24,6 +33,7 @@
   --color-success: var(--success);
   --color-bid-active: var(--bid-active);
   --color-bid-ended: var(--bid-ended);
+
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
